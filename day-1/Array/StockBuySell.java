@@ -8,6 +8,7 @@ public class StockBuySell {
         stack.push(arr[arr.length - 1]);
 
         for (int i = arr.length - 2; i > -1; i--) {
+            
             if (stack.peek() <= arr[i]) {
                 stack.push(arr[i]);
             }
