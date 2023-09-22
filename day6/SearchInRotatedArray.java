@@ -15,7 +15,7 @@ public class SearchInRotatedArray {
     }
     // public static int binSearch(ArrayList<Integer> arr,int k)
     // {
-
+        
     // }
     public static int search(ArrayList<Integer> arr, int n, int k) {
         // isRoatedOrNot
