@@ -18,6 +18,7 @@ public class ArrayIo {
         return arr;
     }
 
+    // 1 d array
     public static ArrayList<Integer> buildArrayList() {
         Scanner scan = new Scanner(System.in);
 
@@ -30,5 +31,33 @@ public class ArrayIo {
         }
         scan.close();
         return arr;
+    }
+
+    // 2 d array
+    public static ArrayList<ArrayList<Integer>> build2dArrayList() {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<ArrayList<Integer>> array = new ArrayList<>();
+        System.out.println("enter the row:");
+        int row = scan.nextInt();
+        System.out.println("enter the col:");
+        int col = scan.nextInt();
+        for (int i = 0; i < row; i++) {
+            ArrayList<Integer> temArray = new ArrayList<>();
+            for (int j = 0; j < col; j++) {
+                temArray.add(scan.nextInt());
+            }
+            array.add(temArray);
+        }
+        return array;
+    }
+
+    public static void print2dArrayList(ArrayList<ArrayList<Integer>> array) {
+        for (ArrayList<Integer> temArray : array) {
+            for (Integer data : temArray) {
+                System.out.println(data + " ");
+            }
+            System.out.println();
+        }
+
     }
 }

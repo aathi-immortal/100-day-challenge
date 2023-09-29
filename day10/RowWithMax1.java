@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import io.ArrayIo;
+
 public class RowWithMax1 {
     public static int binarySearch(ArrayList<ArrayList<Integer>> matrix, int row, int col) {
         int start = 0;
@@ -8,11 +10,14 @@ public class RowWithMax1 {
         while (start <= end) {
             mid = (start + end) / 2;
             if (mid == 0 || matrix.get(row).get(mid) != matrix.get(row).get(mid - 1)) {
+                if (matrix.get(row).get(mid) == 0) {
+                    return mid + 1;
+                }
                 return mid;
             }
             // move right side
             else if (matrix.get(row).get(mid) == 0) {
-                start = mid + 1;
+                start = mid + 1;    
             }
             // move left side
             else {
@@ -22,6 +27,11 @@ public class RowWithMax1 {
         return mid;
     }
 
+    // 0 1 1 1 1
+    // 0 0 1 1 1
+    // 0 0 0 0 1
+    // 1 1 1 1 1
+    // 0 0 1 1 1
     public static int maximumOnesRow(ArrayList<ArrayList<Integer>> matrix, int n, int m) {
         int max = -1;
         int maxIndex = -1;
@@ -35,5 +45,10 @@ public class RowWithMax1 {
 
         }
         return maxIndex;
+    }
+
+    public static void main(String[] args) {
+        ArrayList<ArrayList<Integer>> array = ArrayIo.build2dArrayList();
+        maximumOnesRow(array, 5, 5);
     }
 }
