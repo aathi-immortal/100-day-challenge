@@ -60,4 +60,20 @@ public class ArrayIo {
         }
 
     }
+
+    public static void printArrayList(ArrayList<Integer> arrayList)
+
+    {
+        for (Integer data : arrayList) {
+            System.out.print(data + " ");
+        }
+        System.out.println();
+    }
+
+    public static void printIntArray(int[] array) {
+        for (int value : array) {
+            System.out.print(value + " ");
+        }
+        System.out.println();
+    }
 }
