@@ -20,7 +20,6 @@ public class DuplicateInString {
         }
 
         ans += s.charAt(start);
-
         return ans;
     }
 

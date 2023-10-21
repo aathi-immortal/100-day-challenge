@@ -10,4 +10,4 @@ public class CountInversion {
         }
         return count;
     }
-}k
+}
