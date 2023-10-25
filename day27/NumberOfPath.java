@@ -27,9 +27,28 @@ class GfG {
 // } Driver Code Ends
 
 class Solution {
+    long count = 0;
 
     long numberOfPaths(int M, int N) {
 
+        recursivePathFinder(M, N, 0, 0);
+        return count;
+    }
+
+    private void recursivePathFinder(int row, int col, int currentRow, int currentCol) {
+
+        if (currentRow == row - 1 && currentCol == col - 1) {
+            count++;
+            return;
+        } else if (currentCol >= col)
+
+            return;
+
+        else if (currentRow >= row)
+            return;
+
+        recursivePathFinder(row, col, currentRow, currentCol + 1);
+        recursivePathFinder(row, col, currentRow + 1, currentCol);
     }
 
 }
