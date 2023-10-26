@@ -52,7 +52,32 @@ class Solution {
     }
 
 }
-
+ long askToNeighbour(int row,int col,int currentRow,int currentCol)
+        {
+            if(currentRow == 0 || currentCol == 0)
+            {
+                return  1;
+            }
+            // adding the nighbour value
+            return (long)askToNeighbour(row,col, currentRow,currentCol - 1) + askToNeighbour(row,col, currentRow - 1,currentCol);
+            
+            
+        }
+        long optimizedAskToNeighbour(int row,int col,int currentRow,int currentCol)
+        {
+                if(currentRow == 0 || currentCol == 0)
+            {
+                return  1;
+            }
+            else if(array[currentRow][currentCol] != 0)
+            {
+                return    array[currentRow][currentCol];
+            }
+            array[currentRow][currentCol]  = ((long)optimizedAskToNeighbour(row,col, currentRow,currentCol - 1) + optimizedAskToNeighbour(row,col, currentRow - 1,currentCol)) % ((long)Math.pow(10,9) + 7);
+            return array[currentRow][currentCol];
+                
+        }
+       
 // main class
 public class NumberOfPath {
     public static void main(String[] args) {
