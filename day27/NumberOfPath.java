@@ -77,7 +77,25 @@ class Solution {
             return array[currentRow][currentCol];
                 
         }
-       
+        long optimizedNoRecursion(int row,int col)
+    {
+        int currentRow = 1;
+        int currentCol = 1;
+        for(currentRow = 1;currentRow < row;currentRow++ )
+        {
+            for(currentCol = 1;currentCol < col;currentCol++)    
+            {
+                
+                int left = (currentCol - 1 == 0)?1:array.get(currentRow).get(currentCol - 1);
+                int top = (currentRow - 1 == 0)?1:array.get(currentRow - 1).get(currentCol);
+                
+                array.get(currentRow).set(currentCol,(left + top)%((int)Math.pow(10,9) + 7)) ;        
+            }
+        }
+        return array.get(currentRow - 1).get(currentCol - 1);
+        
+        
+    }
 // main class
 public class NumberOfPath {
     public static void main(String[] args) {
