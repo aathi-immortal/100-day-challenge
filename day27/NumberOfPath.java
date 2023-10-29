@@ -34,7 +34,32 @@ class Solution {
         recursivePathFinder(M, N, 0, 0);
         return count;
     }
-
+    // M * N time complexity 
+    // N space complexity
+long optimalSolution(int row,int col)
+    {
+        if(row == 0 || col == 0)
+        {
+            return 1;
+        }
+        int[] array = new int[col];
+        // array initalization
+        for(int i = 0;i<col;i++)
+        {
+            array[i] = 1;
+        }
+        for(int i = 0;i<row;i++)
+        {
+            int previous = 1;
+            for(int j = 0;j<col;j++)
+            {
+                array[j] = (array[j] + previous) % ((int)Math.pow(10,9) + 7);
+                previous = array[j];
+            }
+        }
+        return array[col - 1];
+    }
+    
     private void recursivePathFinder(int row, int col, int currentRow, int currentCol) {
 
         if (currentRow == row - 1 && currentCol == col - 1) {
