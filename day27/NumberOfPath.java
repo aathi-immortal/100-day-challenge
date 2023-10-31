@@ -35,7 +35,6 @@ class Solution {
         return count;
     }
 
-    // it take lots of space nearly n*m
     private void recursivePathFinder(int row, int col, int currentRow, int currentCol) {
 
         if (currentRow == row - 1 && currentCol == col - 1) {
@@ -57,7 +56,50 @@ class Solution {
     }
 
 }
-
+ long askToNeighbour(int row,int col,int currentRow,int currentCol)
+        {
+            if(currentRow == 0 || currentCol == 0)
+            {
+                return  1;
+            }
+            // adding the nighbour value
+            return (long)askToNeighbour(row,col, currentRow,currentCol - 1) + askToNeighbour(row,col, currentRow - 1,currentCol);
+            
+            
+        }
+        long optimizedAskToNeighbour(int row,int col,int currentRow,int currentCol)
+        {
+                if(currentRow == 0 || currentCol == 0)
+            {
+                return  1;
+            }
+            else if(array[currentRow][currentCol] != 0)
+            {
+                return    array[currentRow][currentCol];
+            }
+            array[currentRow][currentCol]  = ((long)optimizedAskToNeighbour(row,col, currentRow,currentCol - 1) + optimizedAskToNeighbour(row,col, currentRow - 1,currentCol)) % ((long)Math.pow(10,9) + 7);
+            return array[currentRow][currentCol];
+                
+        }
+        long optimizedNoRecursion(int row,int col)
+    {
+        int currentRow = 1;
+        int currentCol = 1;
+        for(currentRow = 1;currentRow < row;currentRow++ )
+        {
+            for(currentCol = 1;currentCol < col;currentCol++)    
+            {
+                
+                int left = (currentCol - 1 == 0)?1:array.get(currentRow).get(currentCol - 1);
+                int top = (currentRow - 1 == 0)?1:array.get(currentRow - 1).get(currentCol);
+                
+                array.get(currentRow).set(currentCol,(left + top)%((int)Math.pow(10,9) + 7)) ;        
+            }
+        }
+        return array.get(currentRow - 1).get(currentCol - 1);
+        
+        
+    }
 // main class
 public class NumberOfPath {
     public static void main(String[] args) {
