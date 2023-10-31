@@ -35,6 +35,7 @@ class Solution {
         return count;
     }
 
+    // it take lots of space nearly n*m
     private void recursivePathFinder(int row, int col, int currentRow, int currentCol) {
 
         if (currentRow == row - 1 && currentCol == col - 1) {
@@ -49,6 +50,10 @@ class Solution {
 
         recursivePathFinder(row, col, currentRow, currentCol + 1);
         recursivePathFinder(row, col, currentRow + 1, currentCol);
+    }
+    public void  askToNeighbour(int row,int col)
+    {   
+        
     }
 
 }
