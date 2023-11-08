@@ -4,4 +4,6 @@ My Commitment:
 
 Every day, I'll take on a popular DSA or algorithm problem and strive to solve it in Java.
 By dedicating myself to this challenge, I'm on a mission to become proficient in the intricacies of DSA and algorithms.
-https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/#google_vignette
+
+https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/
+
