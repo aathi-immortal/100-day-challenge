@@ -1,0 +1,3 @@
+in this project we are designing burger restatrunt but we need to obey some basic rules to build this application
+-> in our class we break open closed princple
+-> when we need to add new product we changing our java file it voilate the 
