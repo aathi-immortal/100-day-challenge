@@ -1,4 +1,6 @@
-package burgerfactory;
+package burgerfactory.products;
+
+// product class 2
 
 public class CheeseBurger extends Burger {
 
