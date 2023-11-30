@@ -19,7 +19,7 @@ class Train implements Comparable<Train> {
 
 }
 
-public class Solution {
+public class TrainPlatForm {
     public static int calculateMinPatforms(int at[], int dt[], int n) {
         // sort the at abd dt array based on the at array
         // ArrayList<Train> trains = new ArrayList<>();
