@@ -15,7 +15,7 @@ class Process {
 
 }
 
-public class Solution {
+public class ShortestJOb {
     static List<Process> arrayOfProcess = new ArrayList<>();
 
     static void loadProcess(int[] arrivalTime, int[] burstTime) {
@@ -97,7 +97,7 @@ public class Solution {
 
         int[] arrivalTime = { 12, 29, 25, 22, 4, 24, 29, 10, 11 };
         int[] burstTime = { 26, 11, 14, 3, 21, 6, 28, 29, 7 };
-        float value = Solution.sjf(9, arrivalTime, burstTime);
+        float value = ShortestJOb.sjf(9, arrivalTime, burstTime);
         System.out.println(value);
     }
 
