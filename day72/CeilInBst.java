@@ -33,4 +33,25 @@ public class CeilInBst {
         }
         return ceilValue;
     }
+    public static int Floor(TreeNode<Integer> root, int x) 
+	{
+				
+        int floorValue = -1;
+        while (root != null) {
+
+            int data = root.data;
+            if (data == x) {
+                return data;
+            } else if (data > x) {
+                // go to left subtree
+                
+                root = root.left;
+
+            } else {
+                floorValue = root.data;
+                root = root.right;
+            }
+        }
+        return floorValue;
+	}
 }

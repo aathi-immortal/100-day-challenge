@@ -22,13 +22,13 @@ import java.util.List;
  ************************************************************/
 
 public class Solution {
-public static int lowestCommonAncestor(TreeNode<Integer> root, int x, int y) {
+public static int lowestCommonAncestor(TreeNode root, int x, int y) {
         // get the path from the root node to the give x and y node
         // store it in the seperate array
         // compare it untill find the same value if found return it
 
-        List<Integer> trackNodeX = new ArrayList<>();
-        List<Integer> trackNodeY = new ArrayList<>();
+        List<TreeNode> trackNodeX = new ArrayList<>();
+        List<TreeNode> trackNodeY = new ArrayList<>();
         rootToLeafBuilder(root, trackNodeX, x);
         rootToLeafBuilder(root, trackNodeY, y);
         // display(trackNodeX);
@@ -36,31 +36,31 @@ public static int lowestCommonAncestor(TreeNode<Integer> root, int x, int y) {
         // return 2;
         return findFirstMatch(trackNodeX,trackNodeY);
     }
-    private static void display(List<Integer> trackNode) {
+    private static void display(List<TreeNode> trackNode) {
         for(int data : trackNode)
         {   
                 System.out.print(data + " ");
         }
         System.out.println();
     }
-    private static int findFirstMatch(List<Integer> trackNodeX, List<Integer> trackNodeY) {
+    private static int findFirstMatch(List<TreeNode> trackNodeX, List<TreeNode> trackNodeY) {
         int index = 0;
         int minSize = Math.min(trackNodeX.size(),trackNodeY.size());
         while(index < minSize)
         {
-            if(trackNodeX.get(index) != trackNodeY.get(index))
+            if(trackNodeX.get(index).data != trackNodeY.get(index).data)
                 return trackNodeX.get(index - 1);
             index++;
         }
         return trackNodeX.get( index - 1);
     }
 
-    private static void rootToLeafBuilder(TreeNode<Integer> root, List<Integer> trackedNode, int destination) {
-        List<Integer> listOfPath = new ArrayList<>();
+    private static void rootToLeafBuilder(TreeNode root, List<TreeNode> trackedNode, int destination) {
+        List<TreeNode> listOfPath = new ArrayList<>();
         rootToLeaf(root, trackedNode,listOfPath, destination);
     }
 
-    private static void rootToLeaf(TreeNode<Integer> root, List<Integer> trackedNode,List<Integer> listOfPath, int destination) {
+    private static void rootToLeaf(TreeNode root, List<TreeNode> trackedNode,List<TreeNode> listOfPath, int destination) {
         if (root == null)
             return;
 
@@ -86,9 +86,9 @@ public static int lowestCommonAncestor(TreeNode<Integer> root, int x, int y) {
 
 
     }
-    static void load(List<Integer>list1,List<Integer> list2)
+    static void load(List<TreeNode>list1,List<TreeNode> list2)
     {
-        for(int data : list2)
+        for(TreeNode data : list2)
         {
             list1.add(data);
         }

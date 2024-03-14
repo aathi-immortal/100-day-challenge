@@ -34,13 +34,13 @@ public class MergeSort {
         }
         while (leftIndex < leftArray.length) {
             array[index++] = leftArray[leftIndex++];
-
+k
         }
         while (rightIndex < rightArray.length) {
             array[index++] = rightArray[rightIndex++];
         }
         return array;
-    }
+    }k
 
     public static void main(String[] args) {
         int[] array = {

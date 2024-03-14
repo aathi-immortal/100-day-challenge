@@ -20,7 +20,7 @@ public class Solution {
 				map.put(character, 1);
 			
 		}
-		for(char chr in map.keySet())
+		for(char chr : map.keySet())
 		{
 			if(map.get(chr) == 1)
 				return chr;
