@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 class TreeNode {
     int val;
@@ -27,6 +32,7 @@ public class InsertIntoBinarySearch {
 
     public static TreeNode insertionInBST(TreeNode root, int val) {
         TreeNode head = root;
+
         if (root == null) {
             return new TreeNode(val);
 
