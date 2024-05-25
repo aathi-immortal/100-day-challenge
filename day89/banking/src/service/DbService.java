@@ -3,17 +3,23 @@ package service;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import model.Bank;
 import model.NormalCustomer;
 
 public class DbService implements IDbService {
 
     static String fileName = "bank_db.txt";
 
-    @Override
-    public ArrayList<NormalCustomer> getAllCustomerDetails() {
+    public DbService() {
 
-        ArrayList<NormalCustomer> customers = new ArrayList<>();
+    }
+
+    @Override
+    public HashMap<Integer, NormalCustomer> getAllCustomerDetails() {
+
+        HashMap<Integer, NormalCustomer> customers = new HashMap<>();
         try {
 
             FileInputStream fileInputStream = new FileInputStream(fileName);
@@ -25,7 +31,9 @@ public class DbService implements IDbService {
                     customerDetailsBuilder.append((char) data);
                 } else {
 
-                    customers.add(customerDetailsExtracter(customerDetailsBuilder.toString()));
+                    NormalCustomer customer = customerDetailsExtracter(customerDetailsBuilder.toString());
+
+                    customers.put(customer.getCustomerId(), customer);
                     customerDetailsBuilder = new StringBuilder();
                 }
 
@@ -69,4 +77,20 @@ public class DbService implements IDbService {
     private byte[] customerToByte(NormalCustomer customer) {
         return customer.toString().getBytes();
     }
+
+    @Override
+    public void updateBalance() {
+        Bank bank = Bank.getBank();
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            fileOutputStream.flush();
+            for (NormalCustomer customer : bank.customers.values()) {
+                addCustomer(customer);
+            }
+            fileOutputStream.close();
+        } catch (Exception e) {
+
+        }
+    }
+
 }

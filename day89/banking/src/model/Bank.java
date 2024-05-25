@@ -1,13 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import service.DbService;
 
 public class Bank {
 
     private static Bank bankObject;
-    public ArrayList<NormalCustomer> customers;
+    public HashMap<Integer, NormalCustomer> customers;
 
     private Bank() {
 

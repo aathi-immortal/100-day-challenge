@@ -1,16 +1,18 @@
 1,1001,John Doe,5000.75,pass1234
-2,1002,Jane Smith,3200.50,password1
-3,1003,Jim Brown,7800.20,abc@123
-4,1004,Lisa White,1500.00,myPass098
-5,1005,Tom Black,6400.90,qwerty12
-6,1006,Anna Green,8700.10,letmein
+2,1002,Jane Smith,3200.5,password1
+3,1003,Jim Brown,7800.2,abc123
+4,1004,Lisa White,1500.0,myPass098
+5,1005,Tom Black,6400.9,qwerty12
+6,1006,Anna Green,8700.1,letmein
 7,1007,Bob Blue,2100.45,helloWorld
-8,1008,Karen Yellow,3900.80,securePass
-9,1009,James Grey,4600.30,javaRocks
-10,1010,Laura Red,5300.60,pythonRulez
-11,1011,David Purple,7800.50,code123
-12,1012,Emily Orange,1100.90,mySecret
-13,1013,Chris Pink,7200.40,openSesame
+8,1008,Karen Yellow,3900.8,securePass
+9,1009,James Grey,4600.3,javaRocks
+10,1010,Laura Red,5300.6,pythonRulez
+11,1011,David Purple,7800.5,code123
+12,1012,Emily Orange,1100.9,mySecret
+13,1013,Chris Pink,7200.4,openSesame
 14,1014,Pat Brown,8500.15,topSecret
-15,1015,Alex Blue,6900.80,superSecure
-16,1016,aathi,10000.0,sss
+15,1015,Alex Blue,6900.8,superSecure
+16,1016,aathi,10000.0,sbn
+17,1017,ddd,14810.0,eee
+18,1018,divan,10000.0,bbuij
