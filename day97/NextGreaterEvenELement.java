@@ -7,42 +7,76 @@ public class NextGreaterEvenELement {
 
     public static void main(String[] args) {
 
-        long number = getNextGreaterEvenNumber(34722641);
+        long number = getNextGreaterEvenNumber(111);
         System.out.println();
         System.out.println("answeris :" + number);
 
     }
 
     private static long getNextGreaterEvenNumber(long number) {
-        ArrayList<Long> permutationarray;
 
-        // number to Array
-        ArrayList<Long> array = Arrayconvertor.longToArray(number);
-        // printArrayOfArray(array);
-        // get the permutation
-        permutationarray = Permutation.getPermutation(array);
-        // printArrayOfArray(permutationarray);
-        // getMinimumEventFrom it
-        return getMinimumEven(permutationarray, number);
+        long nextPermutationNumber = 0;
+        while (nextPermutationNumber != -1) {
+            nextPermutationNumber = getNextPermutation(number);
+            if (nextPermutationNumber % 2 == 0)
+                return nextPermutationNumber;
+            number = nextPermutationNumber;
+        }
+
+        return -1;
 
     }
 
-    private static long getMinimumEven(ArrayList<Long> permutationarray, Long number) {
+    private static long getNextPermutation(long number) {
+        // convert the number to array
+        // traverse from the last
+        // find the break point
+        // get the maximum minimum value
+        // swap it
+        // reverse the right side of break point
+        ArrayList<Long> numberInArray = Arrayconvertor.longToArray(number);
+        int index = numberInArray.size() - 1;
 
-        long temMin = 1000000000 + 1;
-        // first number is even
-        // second number must be greater than number
-        // third number should be less than temMinNumber;
-        for (Long data : permutationarray) {
-            if (data % 2 == 0 && data > number && data < temMin) {
-                temMin = data;
+        for (; index > 0; index--) {
+            long currentValue = numberInArray.get(index);
+            long nextValue = numberInArray.get(index - 1);
+            if (currentValue > nextValue) {
+                // break point
+                // swap it
+                swapWithMinMax(index - 1, numberInArray);
 
+                reverseArray(index, numberInArray);
+                return Arrayconvertor.arrayToLong(numberInArray);
             }
         }
-        if (temMin == 1000000000 + 1)
-            return -1;
-        return temMin;
+        return -1;
 
+    }
+
+    private static void swapWithMinMax(int nextValueIndex, ArrayList<Long> numberInArray) {
+        long nextValue = numberInArray.get(nextValueIndex);
+        int index = numberInArray.size() - 1;
+        for (; index > -1; index--) {
+            long currentValue = numberInArray.get(index);
+            if (currentValue > nextValue) {
+                numberInArray.set(index, nextValue);
+                numberInArray.set(nextValueIndex, currentValue);
+                break;
+            }
+        }
+
+    }
+
+    private static void reverseArray(int index, ArrayList<Long> numberInArray) {
+        int last = numberInArray.size() - 1;
+        while (index < last) {
+            long currentValue = numberInArray.get(index);
+            long lastValue = numberInArray.get(last);
+            numberInArray.set(index, lastValue);
+            numberInArray.set(last, currentValue);
+            index++;
+            last--;
+        }
     }
 
     public static <T> void printArrayOfArray(ArrayList<T> array) {
