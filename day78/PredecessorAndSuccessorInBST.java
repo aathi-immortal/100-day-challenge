@@ -39,11 +39,11 @@ public class PredecessorAndSuccessorInBST {
         List<Integer> ans = new ArrayList<>();
         int index = getNodeIndex(key);
 
-        if(index == 0)
+        if (index == 0)
             ans.add(-1);
         else
             ans.add(inorder.get(index - 1));
-        if(index == inorder.size() - 1)
+        if (index == inorder.size() - 1)
             ans.add(-1);
         else
             ans.add(inorder.get(index + 1));

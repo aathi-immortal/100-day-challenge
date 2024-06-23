@@ -1,8 +1,10 @@
-import java.util.ArrayList;
+
+import java.util.*;
 
 public class MoveZero {
     public static void pushZerosAtEnd(ArrayList<Integer> arr) {
         int zeroCount = 0;
+
         // traverse the array
         for (int index = 0; index < arr.size(); index++) {
             int currentValue = arr.get(index);

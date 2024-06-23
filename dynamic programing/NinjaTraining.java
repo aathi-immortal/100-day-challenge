@@ -3,8 +3,8 @@ public class NinjaTraining {
     static int arr[][];
 
     public static int ninjaTraining(int n, int points[][]) {
-        arr = new int[n][3];
-        return recSol(0, n, points, -1);
+        arr = new int[n + 1][6];
+        return recSol(0, n, points, 5);
     }
 
     private static int recSol(int currentDay, int totalDays, int[][] points, int previous) {
@@ -15,29 +15,44 @@ public class NinjaTraining {
         if (currentDay == totalDays) {
             return 0;
         }
-        
+
         if (previous != 0) {
-            
             // running
-            running = points[currentDay][0] + recSol(currentDay + 1, totalDays, points, 0);
+            int nextDay = 0;
+            if (previous != -1 && arr[currentDay + 1][previous] != 0)
+                nextDay = arr[currentDay + 1][previous];
+            else {
+                nextDay = recSol(currentDay + 1, totalDays, points, 0);
+                arr[currentDay + 1][previous] = nextDay;
+            }
+            running = points[currentDay][0] + nextDay;
         }
         if (previous != 1) {
-            fighting = points[currentDay][1] + recSol(currentDay + 1, totalDays, points, 1);
+            int nextDay = 0;
+            if (previous != -1 && arr[currentDay + 1][previous] != 0)
+                nextDay = arr[currentDay + 1][previous];
+            else {
+                nextDay = recSol(currentDay + 1, totalDays, points, 1);
+                arr[currentDay + 1][previous] = nextDay;
+            }
+            fighting = points[currentDay][1] + nextDay;
         }
         if (previous != 2) {
-            moves = points[currentDay][2] + recSol(currentDay + 1, totalDays, points, 2);
+            int nextDay = 0;
+            if (previous != -1 && arr[currentDay + 1][previous] != 0)
+                nextDay = arr[currentDay + 1][previous];
+            else {
+                nextDay = recSol(currentDay + 1, totalDays, points, 2);
+                arr[currentDay + 1][previous] = nextDay;
+            }
+            moves = points[currentDay][2] + nextDay;
         }
-        int status = running > fighting && running > moves
-                ? 0
-                : fighting > moves
-                        ? 1
-                        : 2;
-        arr[currentDay][status] = status == 0
+        return running > fighting && running > moves
                 ? running
-                : status == 1
+                : fighting > moves
                         ? fighting
                         : moves;
-        return arr[currentDay][status];
+
     }
 
     public static void main(String[] args) {
@@ -45,6 +60,9 @@ public class NinjaTraining {
                 { 3, 1, 1 },
                 { 3, 3, 3 } };
         int result = NinjaTraining.ninjaTraining(3, arr);
+        System.out.println();
+        System.out.println("result");
+
         System.out.println(result);
     }
 }
