@@ -14,6 +14,8 @@ public class AlternativeSorting {
         while (firstIndex < lastIndex) {
             dummy.add(arr[lastIndex]);
             dummy.add(arr[firstIndex]);
+            firstIndex++;
+            lastIndex--;
         }
         if (firstIndex == lastIndex) {
             dummy.add(arr[firstIndex]);
