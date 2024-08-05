@@ -7,10 +7,10 @@ public class Main {
         root.md("newFolder");
         root = root.cd("newFolder");
         root.pwd();
-        root.list();
-        root = root.upward();
-        root = root.home();
-        root.touch();
+        // root.list();
+        // root = root.upward();
+        // root = root.home();
+        // root.touch();
 
     }
 }
@@ -48,13 +48,17 @@ class Directory {
     }
 
     public void pwd() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pwd'");
+        System.out.println(this.location);
     }
 
-    public Directory cd(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cd'");
+    public Directory cd(String directoryName) {
+        for (Directory directory : this.subDirectory) {
+            if (directory.name.equals(directoryName)) {
+                return directory;
+            }
+        }
+        System.out.println("No Directory found!");
+        return null;
     }
 
     public void md(String directoryName) {
