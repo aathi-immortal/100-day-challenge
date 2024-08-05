@@ -10,9 +10,9 @@
 10,1010,Laura Red,5300.6,pythonRulez
 11,1011,David Purple,7800.5,code123
 12,1012,Emily Orange,1100.9,mySecret
-13,1013,Chris Pink,7200.4,openSesame
+13,1013,Chris Pink,10200.4,openSesame
 14,1014,Pat Brown,8500.15,topSecret
 15,1015,Alex Blue,6900.8,superSecure
-16,1016,aathi,10000.0,sbn
-17,1017,ddd,14810.0,eee
+16,1016,aathi,16000.0,sbn
+17,1017,ddd,7810.0,eee
 18,1018,divan,10000.0,bbuij

@@ -1,34 +1,97 @@
 import java.util.Arrays;
-import java.util.Scanner;
 
 class Equation {
     Term[] terms;
-    VariableValue[] variableValues;
+    VariableValue[] variableValueArray;
 
-    Equation(int size) {
-        terms = new Term[size];
+    Equation(int numberOfTerms) {
+        terms = new Term[numberOfTerms];
     }
 
     public static Equation parseEquation(String equationInString) {
-
+        int count = 0;
         equationInString.trim();
         String[] termsInPrimitive = splitTerms(equationInString);// {"2x","4y"}
 
-        int count = 0;
         Equation equation = new Equation(termsInPrimitive.length);
+
         for (String termInPrimitive : termsInPrimitive) {
             equation.terms[count++] = Term.parseTerm(termInPrimitive);
+
         }
+        equation.variableValueArray = convertToVariableValueArray(equation);
+
         return equation;
     }
-    
+
+    private static VariableValue[] convertToVariableValueArray(Equation equation) {
+        VariableValue[] temVariableValueArray = new VariableValue[getVariableCount(equation)];
+        int index = 0;
+        for (Term term : equation.terms) {
+            for (Variable variable : term.variables) {
+                if (isNewVariable(variable, temVariableValueArray)) {
+                    temVariableValueArray[index++] = VariableValue.getInstance(variable);
+                }
+            }
+        }
+        return temVariableValueArray;
+    }
+
+    private static boolean isNewVariable(Variable variable, VariableValue[] temVariableValueArray) {
+        for (VariableValue variableValue : temVariableValueArray) {
+            if (variableValue != null && variable.name == variableValue.name)
+                return false;
+        }
+        return true;
+    }
+
+    private static int getVariableCount(Equation equation) {
+        int count = 0;
+        for (Term term : equation.terms) {
+            for (Variable variable : term.variables) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public int evaluate(int[] arr) {// 0 ->x,1->y,2->z
         // traverse the given variable array
+
+        loadValueToVariableValueArray(arr);
         int result = 0;
         for (Term term : terms) {
-            result += term.evaluate(arr);
+
+            result += term.evaluate(arr, getVariableValues(term));
         }
         return result;
+    }
+
+    private VariableValue[] getVariableValues(Term term) {
+        int index = 0;
+        VariableValue[] variableValueArray = new VariableValue[term.variables.length];
+
+        for (Variable variable : term.variables) {
+
+            variableValueArray[index++] = getVariableValues(variable);
+        }
+        return variableValueArray;
+    }
+
+    private VariableValue getVariableValues(Variable variable) {
+        for (VariableValue variableValue : variableValueArray) {
+            if (variable.name == variableValue.name)
+                return variableValue;
+        }
+        return null;
+    }
+
+    private void loadValueToVariableValueArray(int[] arr) {
+        int index = 0;
+        for (int data : arr) {
+            this.variableValueArray[index++].value = data;
+
+        }
     }
 
     public static String[] splitTerms(String input) {
@@ -52,7 +115,9 @@ class Equation {
 
     @Override
     public String toString() {
-        return "Equation [terms=" + Arrays.toString(terms) + "]";
+        return "Equation [terms=" + Arrays.toString(terms) + ", variableValueArray="
+                + Arrays.toString(variableValueArray)
+                + "]";
     }
 
     public Equation multiply(String string) {
@@ -87,10 +152,10 @@ class Term {
         variables = new Variable[size];
     }
 
-    public int evaluate(int[] arr) {
+    public int evaluate(int[] arr, VariableValue[] variableValueArray) {
         int result = coefficient;
         for (Variable variable : variables) {
-            result *= variable.evaluate(arr);
+            result *= variable.evaluate(variableValueArray);
         }
         return result;
     }
@@ -139,9 +204,11 @@ class Term {
     }
 
     public static Term parseTerm(String termInString) {
+
         termInString = termInString.trim();
         StringBuilder coefficientBuilder = new StringBuilder();
-        StringBuilder variableBuilder = new StringBuilder();
+        StringBuilder variablesBuilder = new StringBuilder();
+        StringBuilder powerBuilder = new StringBuilder();
         int index = 0;
 
         if (termInString.charAt(index) == '-') {
@@ -151,29 +218,39 @@ class Term {
             index++;
         }
 
-        boolean foundVariable = false;
+        boolean variableFound = false;
         for (; index < termInString.length(); index++) {
             char ch = termInString.charAt(index);
+
             if (Character.isDigit(ch)) {
-                if (foundVariable) {
-                    variableBuilder.append(ch);
+                if (variableFound) {
+
+                    powerBuilder.append(ch);
                 } else {
+
                     coefficientBuilder.append(ch);
                 }
             } else if (ch == '^') {
-                foundVariable = true;
+
+                variableFound = true;
             } else {
-                variableBuilder.append(ch);
-                foundVariable = true;
+
+                variablesBuilder.append(ch);
+                variableFound = true;
             }
         }
 
-        int coefficient = coefficientBuilder.length() > 0 ? Integer.parseInt(coefficientBuilder.toString()) : 1;
-        Variable variable = Variable.parseVariable(variableBuilder.toString());
-        Term term = new Term(variableBuilder.length());
-        term.coefficient = coefficient;
-        term.variables[0] = variable;
+        String coefficient = coefficientBuilder.length() > 0 ? coefficientBuilder.toString() : "1";
+        String variables = variablesBuilder.toString();
 
+        String power = powerBuilder.length() > 0 ? powerBuilder.toString() : "1";
+
+        Term term = new Term(variables.length());
+        term.coefficient = Integer.parseInt(coefficient);
+
+        for (index = 0; index < variables.length(); index++) {
+            term.variables[index] = Variable.parseInt(variables.charAt(index), 1);
+        }
         return term;
     }
 
@@ -210,12 +287,14 @@ class Variable {
         return new Variable(name, power);
     }
 
-    public int evaluate(int[] arr) {
-        int currentValue = arr[2];
-        if (Character.toLowerCase(this.name) == 'x') {
-            currentValue = arr[0];
-        } else if (Character.toLowerCase(this.name) == 'y') {
-            currentValue = arr[1];
+    public int evaluate(VariableValue[] variableValueArray) {
+        int currentValue = 0;
+
+        for (VariableValue variableValue : variableValueArray) {
+            if (this.name == variableValue.name) {
+                currentValue = variableValue.value;
+
+            }
         }
         return (int) Math.pow(currentValue, this.power);
 
@@ -231,16 +310,30 @@ class Variable {
 class VariableValue {
     char name;
     int value;
+
+    public static VariableValue getInstance(Variable variable) {
+        VariableValue variableValue = new VariableValue();
+        variableValue.name = variable.name;
+        variableValue.value = 0;
+        return variableValue;
+    }
+
+    @Override
+    public String toString() {
+        return "VariableValue [name=" + name + ", value=" + value + "]";
+    }
+
 }
 
 public class PlayWithEquation {
     public static void main(String[] args) {
         int arr[] = { 4, 2, 3 };
         System.out.println();
-        Equation equation = Equation.parseEquation("4x-5yx+2z");
-        equation.display();
-        int result = equation.evaluate(arr);
+        Equation equation = Equation.parseEquation("4x-5xy+2z");
+        // equation.display();
 
+        int result = equation.evaluate(arr);
+        System.out.println(equation);
         System.out.println(result);
 
         // System.out.println(equation.terms[0].coefficient);

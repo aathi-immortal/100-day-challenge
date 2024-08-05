@@ -55,7 +55,7 @@ public class DbService implements IDbService {
         customer.setAccountNumber(Long.parseLong(customerDetailsArray[1]));
         customer.setCustomerName(customerDetailsArray[2]);
         customer.setBalance(Float.parseFloat(customerDetailsArray[3]));
-        customer.setPassword(customerDetailsArray[4]);
+        customer.setPassword(customerDetailsArray[4].trim());
         return customer;
 
     }

@@ -12,9 +12,13 @@ public class AuthenticationService implements IAuthenticationService {
 
     @Override
     public boolean isValidCredentials(int customerId, String password) {
-        
-        if (bank.customers.containsKey(customerId) && bank.customers.get(customerId).getPassword().equals(password)) {
-            return true;
+
+        if (bank.customers.containsKey(customerId)) {
+
+            if (bank.customers.get(customerId).getPassword().compareTo(password) == 0) {
+                return true;
+            }
+
         }
         return false;
 
