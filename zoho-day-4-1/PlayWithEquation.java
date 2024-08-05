@@ -98,7 +98,7 @@ class Equation {
         String temArray[] = new String[input.length()];
         int index = 0;
         String regex = "([+-]?[^-+]+)";
-
+        
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
         java.util.regex.Matcher matcher = pattern.matcher(input.replaceAll(" ", ""));
 
@@ -331,7 +331,7 @@ public class PlayWithEquation {
         int arr[] = { 4, 2, 3 };
         System.out.println();
         Equation equation = Equation.parseEquation("4x-2y+3xz");
-        equation = equation.multiply("2x+3yz");
+        // equation = equation.multiply("2x+3yz");
         // equation.display();
 
         int result = equation.evaluate(arr);
