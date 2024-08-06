@@ -1,19 +1,15 @@
-class FileSystemItem {
 
+class Directory {
     String name;
-
     Directory parent;
-
-}
-
-class Directory extends FileSystemItem {
     static String[] location;
     static Directory trash;
     Directory[] innerDirectory;
     File innerFiles[];
+    String[] parentPath;
 
     public Directory(String name) {
-        super.name = name;
+        this.name = name;
         innerDirectory = new Directory[10];
         innerFiles = new File[10];
 
@@ -26,6 +22,8 @@ class Directory extends FileSystemItem {
         root = root.innerDirectory[0];
         // root.location = "c:\\";
         Directory.location[0] = "c:";
+        Directory.trash = new Directory("trash");
+        root.innerDirectory[0] = Directory.trash;
         return root;
     }
 
@@ -133,6 +131,10 @@ class Directory extends FileSystemItem {
     }
 
     public void excuteListDir() {
+        if (this.name.equals("trash")) {
+            this.trashListDir();
+            return;
+        }
         for (Directory directory : this.innerDirectory) {
             if (directory != null) {
                 Directory.location[getDirectoryLocationLength()] = directory.name;
@@ -148,6 +150,19 @@ class Directory extends FileSystemItem {
             }
         }
 
+    }
+
+    private void trashListDir() {
+        for (Directory directory : this.innerDirectory) {
+            if (directory != null) {
+                System.out.println("trash:\\" + directory.name);
+            }
+        }
+        for (File file : this.innerFiles) {
+            if (file != null) {
+                System.out.println("trash:\\" + file.name);
+            }
+        }
     }
 
     public Directory excuteHome() {
@@ -227,9 +242,17 @@ class Directory extends FileSystemItem {
     }
 
     public Directory delete() {
+
         Directory parentDirectory = this.parent;
         parentDirectory.removeDirectory(this.name);
+        this.loadDiretoryToTrash();
         return parentDirectory;
+    }
+
+    private void loadDiretoryToTrash() {
+        this.parentPath = Directory.location;
+        Directory.trash.innerDirectory[trash.getDirectoryLength()] = this;
+
     }
 
     private void removeDirectory(String name) {
@@ -240,6 +263,7 @@ class Directory extends FileSystemItem {
             }
             index++;
         }
+        Directory.location[Directory.getDirectoryLocationLength() - 1] = null;
     }
 
     public void excuteRename(String newName) {
@@ -273,8 +297,11 @@ class Directory extends FileSystemItem {
     }
 }
 
-class File extends FileSystemItem {
+class File {
+    String name;
+    Directory parent;
     String[] FileSystemItem;
+    String parentPath;
 
     public File(String fileName) {
         this.name = fileName;
@@ -290,8 +317,8 @@ public class PlayWithDirectory {
 
         Directory root = Directory.openCommandPrompt();
         // normalTest(root);
-        reNameTesting(root);
-        // removeTesting(root);
+        // reNameTesting(root);
+        removeTesting(root);
     }
 
     private static void removeTesting(Directory root) {
@@ -304,19 +331,32 @@ public class PlayWithDirectory {
         root.excuteMakeDir("designPattern");
         root.excuteMakeDir("Iot");
         root = root.excuteChangeDir("100-day-challenge");
-
+        // root.excutePresentWorkingDiretory();
         root.excuteMakeDir("zoho-day-1");
         root.excuteMakeDir("zoho-day-2");
-        root.excuteListDir();
-        root = root.excuteChangeDir("..");
-        root = root.excuteChangeDir("..");
+        // // root.excuteListDir();
+        // root = root.excuteChangeDir("..");
+        // root = root.excuteChangeDir("..");
         root = root.excuteChangeDir("zoho-day-1");
+        // root.excutePresentWorkingDiretory();
         root.excuteTouch("a.java");
         root.excuteTouch("b.java");
         root.excuteTouch("c.java");
-        root.excuteListDir();
-        root = root.delete();
+        root.excutePresentWorkingDiretory();
         // root.excuteListDir();
+        // System.out.println("parent" + root.parent.name);
+        root = root.delete();
+
+        // root.excutePresentWorkingDiretory();
+        // Directory.trash.excuteListDir();
+
+        // root.excutePresentWorkingDiretory();
+        System.out.println("list of trash");
+        // root.excuteListDir();
+        root = root.excuteChangeDir("..");
+        root = root.excuteChangeDir("..");
+        root = root.excuteChangeDir("trash");
+        root.excuteListDir();
     }
 
     private static void normalTest(Directory root) {
@@ -388,6 +428,7 @@ public class PlayWithDirectory {
         root.excuteRenameFile("a.java", "b.java");
         System.out.println("after file rename");
         root.excuteListDir();
+
         // root.excuteNano("aa.java", "vanakkam");
         // root.excuteCat("aa.java");
 
