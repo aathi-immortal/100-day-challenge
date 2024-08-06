@@ -8,6 +8,7 @@ class FileSystemItem {
 
 class Directory extends FileSystemItem {
     static String[] location;
+    static Directory trash;
     Directory[] innerDirectory;
     File innerFiles[];
 
@@ -72,6 +73,9 @@ class Directory extends FileSystemItem {
 
     public void excuteMakeDir(String directoryName) {
         // create directory object with the given name
+        if (isDirectoryAlreadyPresent(directoryName)) {
+            return;
+        }
         Directory directory = new Directory(directoryName);
 
         directory.parent = this;
@@ -186,6 +190,9 @@ class Directory extends FileSystemItem {
     // }
 
     public void excuteRenameFile(String currentFileName, String newFileName) {
+        if (isFileAlreadyPresent(newFileName)) {
+            return;
+        }
         File file = getInnerFile(currentFileName);
         file.name = newFileName;
         // file.setLocationFromParent();
@@ -235,6 +242,35 @@ class Directory extends FileSystemItem {
         }
     }
 
+    public void excuteRename(String newName) {
+        if (isDirectoryAlreadyPresent(newName)) {
+            return;
+        }
+        this.name = newName;
+        Directory.location[getDirectoryLocationLength() - 1] = newName;
+    }
+
+    private boolean isDirectoryAlreadyPresent(String newName) {
+        for (Directory directory : this.innerDirectory) {
+            if (directory != null && directory.name.equals(newName)) {
+                System.out.println("Directory already found");
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    private boolean isFileAlreadyPresent(String newName) {
+        for (File file : this.innerFiles) {
+            if (file != null && file.name.equals(newName)) {
+                System.out.println("file already found");
+                return true;
+            }
+
+        }
+        return false;
+    }
 }
 
 class File extends FileSystemItem {
@@ -274,12 +310,12 @@ public class PlayWithDirectory {
         root.excuteListDir();
         root = root.excuteChangeDir("..");
         root = root.excuteChangeDir("..");
-        root.root = root.excuteChangeDir("zoho-day-1");
+        root = root.excuteChangeDir("zoho-day-1");
         root.excuteTouch("a.java");
         root.excuteTouch("b.java");
         root.excuteTouch("c.java");
         root.excuteListDir();
-        // root = root.delete();
+        root = root.delete();
         // root.excuteListDir();
     }
 
@@ -342,13 +378,14 @@ public class PlayWithDirectory {
         root = root.excuteChangeDir("..");
 
         root.excuteRename("challengeAdvance");
+
         System.out.println("after rename");
         root = root.excuteChangeDir("100-day-challenge");
         // System.out.println(root.location);
         root = root.excuteChangeDir("zoho-day-1");
         // root.excutePresentWorkingDiretory();
         root.excuteListDir();
-        root.excuteRenameFile("a.java", "aa.java");
+        root.excuteRenameFile("a.java", "b.java");
         System.out.println("after file rename");
         root.excuteListDir();
         // root.excuteNano("aa.java", "vanakkam");
